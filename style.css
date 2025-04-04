@@ -29,34 +29,36 @@ body {
 .container {
   width: 100%;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .content {
-  padding: 10px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .header {
   font-size: 40px;
   font-weight: 900;
   color: var(--Rose-900);
-  padding: 20px 0px;
+  grid-row: 1;
+  grid-column: 1/-1;
+  margin-bottom: -30px;
 }
 
-.products-container {
+.products-grid {
   width: 100%;
-  max-width: 1440px;
   display: grid;
-  grid-template-columns: repeat(4, auto);
   place-content: center;
-  gap: 40px;
+  grid-column-gap: 30px;
+  grid-row-gap: 50px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, auto));
 }
 
 .product {
   max-width: 260px;
-  min-width: 200px;
+  /* min-width: 200px; */
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -71,9 +73,9 @@ body {
   background-color: var(--Rose-50);
   color: var(--Rose-900);
   font-weight: 700;
-  width: 70%;
+  width: 60%;
   padding: 10px 0px;
-  border: solid 1px var(--Rose-500);
+  border: solid 1px var(--Rose-400);
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -82,8 +84,18 @@ body {
   gap: 5px;
   font-size: 14px;
   z-index: 5;
-  margin-top: -40px;
+  margin-top: -37px;
   cursor: pointer;
+}
+
+.product-btn:hover{
+    color: var(--Red);
+    border: 1px solid var(--Red);
+}
+
+.product-btn.active{
+    background-color: var(--Red);
+    border: none;
 }
 
 .product-details {
@@ -97,7 +109,7 @@ body {
 
 .product-category {
   font-size: 12px;
-  color: var(--Rose-300);
+  color: var(--Rose-400);
 }
 
 .product-name {
@@ -106,4 +118,14 @@ body {
 
 .product-price {
   color: var(--Red);
+}
+
+@media only screen and (max-width: 570px) {
+  .product {
+    max-width: 400px;
+  }
+
+  .product-btn{
+    width: 50%;
+  }
 }
