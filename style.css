@@ -69,33 +69,61 @@ body {
   border-radius: 10px;
 }
 
-.product-btn {
-  background-color: var(--Rose-50);
-  color: var(--Rose-900);
-  font-weight: 700;
-  width: 60%;
-  padding: 10px 0px;
-  border: solid 1px var(--Rose-400);
-  border-radius: 20px;
+.product-btn-container {
+  margin-top: -37px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   place-self: center;
+  width: 60%;
+  border-radius: 20px;
+}
+
+.add-to-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
-  font-size: 14px;
-  z-index: 5;
-  margin-top: -37px;
+  width: 100%;
+  color: var(--Rose-900);
+  font-weight: 600;
+  border: 1px solid var(--Rose-400);
+  background-color: var(--Rose-50);
+  padding: 10px 0px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
-.product-btn:hover{
-    color: var(--Red);
-    border: 1px solid var(--Red);
+.add-to-cart-btn:hover {
+  color: var(--Red);
+  border: 1px solid var(--Red);
 }
 
-.product-btn.active{
-    background-color: var(--Red);
-    border: none;
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--Rose-50);
+  border: none;
+  background: var(--Red);
+  padding: 10px 0px;
+  border-radius: 20px;
+  border: none;
+}
+
+.decrement-btn,
+.increment-btn {
+  height: 17px;
+  width: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid var(--Rose-50);
+  border-radius: 50%;
+  margin: 0px 15px;
+  cursor: pointer;
 }
 
 .product-details {
@@ -103,7 +131,6 @@ body {
   flex-direction: column;
   gap: 2px;
   font-weight: 700;
-  /* margin-top: 10px; */
   font-size: 16px;
 }
 
@@ -125,7 +152,7 @@ body {
     max-width: 400px;
   }
 
-  .product-btn{
+  .product-btn-container {
     width: 50%;
   }
 }

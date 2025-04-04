@@ -1,22 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  <link rel="stylesheet" href="style.css">
-  
-  <title>Food shop</title>
-</head>
-<body>
-  <div class="container">
-    <div class="content">
-      <div id="productsGrid" class="products-grid">
-        <h1 class="header">Desserts</h1>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Food shop</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div id="productsGrid" class="products-grid">
+          <h1 class="header">Desserts</h1>
+          <div class="product">
+            <img
+              class="product-image"
+              src="assets/images/image-waffle-desktop.jpg"
+              alt=""
+            />
+            <div class="product-btn-container">
+              <button class="add-to-cart-btn">
+                <img src="/assets/images/icon-add-to-cart.svg" alt="" />Add to
+                cart
+              </button>
+              <div class="quantity-controls">
+                <button class="decrement-btn">
+                  <img src="assets/images/icon-decrement-quantity.svg" alt="" />
+                </button>
+                <p class="quantity">2</p>
+                <button class="increment-btn">
+                  <img src="assets/images/icon-increment-quantity.svg" alt="" />
+                </button>
+              </div>
+            </div>
+
+            <div class="product-details">
+              <p class="product-category">Waffle</p>
+              <p class="product-name">Waffle with berries</p>
+              <p class="product-price">$6.50</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="main.js"></script>
-</body>
+    <!-- <div class="product">
+      <img class="product-image" src="assets/images/image-waffle-desktop.jpg" alt="">
+      <button class="product-btn"><img src="/assets/images/icon-add-to-cart.svg" alt="">Add to cart</button>
+      <div class="product-details">
+        <p class="product-category">Waffle</p>
+        <p class="product-name">Waffle with berries</p>
+        <p class="product-price">$6.50</p>
+      </div>
+    </div> -->
+    <script src="main.js"></script>
+  </body>
 </html>
