@@ -1,4 +1,3 @@
-
 async function fetchProductData() {
   try {
     const response = await fetch("./data.json");
@@ -41,6 +40,11 @@ function createProductElement(productData) {
     buttonIcon.alt = "Add to cart svg";
     addToCartButton.appendChild(buttonIcon);
     addToCartButton.appendChild(document.createTextNode("Add to cart"));
+
+    addToCartButton.addEventListener("click", (event) =>
+      addToCart(event, product)
+    );
+
     productBtnContainer.appendChild(addToCartButton);
 
     // Create quantity controls
@@ -57,7 +61,6 @@ function createProductElement(productData) {
 
     const quantityText = document.createElement("p");
     quantityText.classList.add("quantity");
-    quantityText.textContent = "2"; // Default quantity
     quantityControls.appendChild(quantityText);
 
     const incrementButton = document.createElement("button");
@@ -99,6 +102,51 @@ function createProductElement(productData) {
     // Append product container to products grid
     productsGrid.appendChild(productDiv);
   });
+}
+
+function addToCart(event, product) {
+  console.log(event.target);
+  console.log(product);
+  const addToCartButton = event.target.closest(".add-to-cart-btn");
+  const productBtnContainer = addToCartButton.parentElement;
+  const quantityControls =
+    productBtnContainer.querySelector(".quantity-controls");
+  const incrementButton = quantityControls.querySelector(".increment-btn");
+  const decrementButton = quantityControls.querySelector(".decrement-btn");
+  const quantityEl = quantityControls.querySelector(".quantity");
+
+  let quantity = 1;
+  quantityEl.textContent = quantity;
+
+  incrementButton.addEventListener("click", () => {
+    quantity++;
+    quantityEl.textContent = quantity;
+    console.log(quantity);
+  });
+
+  decrementButton.addEventListener("click", () => {
+    if (quantity > 1) {
+      quantity--;
+      quantityEl.textContent = quantity;
+      console.log(quantity);
+    } else {
+      if (addToCartButton.style.display === "none") {
+        addToCartButton.style.display = "flex";
+        if (quantityControls) {
+          quantityControls.style.display = "none";
+        }
+      }
+    }
+  });
+  if (addToCartButton.style.display !== "none") {
+    // Hide the Add to Cart button
+    addToCartButton.style.display = "none";
+
+    // Show the quantity controls
+    if (quantityControls) {
+      quantityControls.style.display = "flex";
+    }
+  }
 }
 
 fetchProductData();
