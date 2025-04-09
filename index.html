@@ -10,7 +10,8 @@
       sizes="32x32"
       href="./assets/images/favicon-32x32.png"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="cart.css">
 
     <title>Food shop</title>
   </head>
@@ -19,46 +20,106 @@
       <div class="content">
         <div id="productsGrid" class="products-grid">
           <h1 class="header">Desserts</h1>
-          <div class="product">
-            <img
-              class="product-image"
-              src="assets/images/image-waffle-desktop.jpg"
-              alt=""
-            />
-            <div class="product-btn-container">
-              <button class="add-to-cart-btn">
-                <img src="/assets/images/icon-add-to-cart.svg" alt="" />Add to
-                cart
-              </button>
-              <div class="quantity-controls">
-                <button class="decrement-btn">
-                  <img src="assets/images/icon-decrement-quantity.svg" alt="" />
-                </button>
-                <p class="quantity">2</p>
-                <button class="increment-btn">
-                  <img src="assets/images/icon-increment-quantity.svg" alt="" />
+        </div>
+
+        <div class="cart-container">
+          <div class="cart">
+            <h2 class="cart-header">Your cart (7)</h2>
+            <div class="cart-content">
+              <div class="cart-product">
+                <div class="cart-product-details-wrapper">
+                  <img class="cart-product-image" src="assets/images/image-tiramisu-thumbnail.jpg" alt="Product image">
+                  <div class="cart-product-details">
+                    <p class="cart-product-name">Classic Tiramisu</p>
+                    <div class="cart-product-quantity_price">
+                      <p class="cart-product-quantity">1x</p>
+                      <p class="cart-product-default-price">@ $5.50</p>
+                      <p class="cart-product-total-price">$5.50</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="cart-remove-product-btn">
+                  <img src="assets/images/icon-remove-item.svg" alt="Remove item" />
                 </button>
               </div>
-            </div>
 
-            <div class="product-details">
-              <p class="product-category">Waffle</p>
-              <p class="product-name">Waffle with berries</p>
-              <p class="product-price">$6.50</p>
+
+              <div class="cart-product">
+                <div class="cart-product-details-wrapper">
+                  <img class="cart-product-image" src="assets/images/image-creme-brulee-thumbnail.jpg" alt="Product image">
+                  <div class="cart-product-details">
+                    <p class="cart-product-name">Vanilla Bean Crème Brûlée</p>
+                    <div class="cart-product-quantity_price">
+                      <p class="cart-product-quantity">4x</p>
+                      <p class="cart-product-default-price">@ $7.00</p>
+                      <p class="cart-product-total-price">$28.00</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="cart-remove-product-btn">
+                  <img src="assets/images/icon-remove-item.svg" alt="Remove item" />
+                </button>
+              </div>
+
+
+              <div class="cart-product">
+                <div class="cart-product-details-wrapper">
+                  <img class="cart-product-image" src="assets/images/image-panna-cotta-thumbnail.jpg" alt="Product image">
+                  <div class="cart-product-details">
+                    <p class="cart-product-name">Vanilla Panna Cotta</p>
+                    <div class="cart-product-quantity_price">
+                      <p class="cart-product-quantity">2x</p>
+                      <p class="cart-product-default-price">@ $6.50</p>
+                      <p class="cart-product-total-price">$13.00</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="cart-remove-product-btn">
+                  <img src="assets/images/icon-remove-item.svg" alt="Remove item" />
+                </button>
+              </div>
+
             </div>
+            <div class="cart-total">
+              <p class="cart-total-text">Order Total</p>
+              <p class="cart-total-number">$46.50</p>
+            </div>
+            <button class="cart-order-confirm-btn">Confirm order</button>
           </div>
         </div>
       </div>
     </div>
+
+
     <!-- <div class="product">
-      <img class="product-image" src="assets/images/image-waffle-desktop.jpg" alt="">
-      <button class="product-btn"><img src="/assets/images/icon-add-to-cart.svg" alt="">Add to cart</button>
+      <img
+        class="product-image"
+        src="assets/images/image-waffle-desktop.jpg"
+        alt=""
+      />
+      <div class="product-btn-container">
+        <button class="add-to-cart-btn">
+          <img src="/assets/images/icon-add-to-cart.svg" alt="" />Add to
+          cart
+        </button>
+        <div class="quantity-controls">
+          <button class="decrement-btn">
+            <img src="assets/images/icon-decrement-quantity.svg" alt="" />
+          </button>
+          <p class="quantity">2</p>
+          <button class="increment-btn">
+            <img src="assets/images/icon-increment-quantity.svg" alt="" />
+          </button>
+        </div>
+      </div>
+
       <div class="product-details">
         <p class="product-category">Waffle</p>
         <p class="product-name">Waffle with berries</p>
         <p class="product-price">$6.50</p>
       </div>
     </div> -->
+
     <script src="main.js"></script>
   </body>
 </html>
