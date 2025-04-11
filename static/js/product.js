@@ -1,4 +1,4 @@
-import { addToCart, updateQuantity } from "./cart.js";
+import { addToCart, showQuantityControls, updateQuantity } from "./cart.js";
 
 function createProductElement(productData) {
   const productsGrid = document.getElementById("productsGrid");
@@ -40,15 +40,17 @@ function createProductElement(productData) {
     const quantityText = productDiv.querySelector(".quantity");
     incrementButton.addEventListener("click", () => {
       updateQuantity(product, 1);
-      quantityText.textContent = Number(quantityText.textContent) + 1;
+      quantityText.textContent = Number(quantityText.textContent);
     });
 
     decrementButton.addEventListener("click", () => {
       updateQuantity(product, -1);
-      quantityText.textContent = Number(quantityText.textContent) - 1;
+      quantityText.textContent = Number(quantityText.textContent);
     });
 
     productsGrid.appendChild(productDiv);
+    updateQuantity(product, 0)
+ 
   });
 }
 
