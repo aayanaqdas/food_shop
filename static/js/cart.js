@@ -39,9 +39,35 @@ function createCartProduct(product) {
       </button>
   `;
 
+  const removeBtn = cartProductDiv.querySelector(".cart-remove-product-btn");
+
+  removeBtn.addEventListener("click", () => {
+    deleteProduct(product, cartProductDiv);
+  });
   cartContentEl.appendChild(cartProductDiv);
   updateCartTotal();
 }
+
+function deleteProduct(product, cartProductDiv) {
+  const {name} = product;
+  cartProductDiv.remove();
+  const productDiv = Array.from(
+    document.getElementsByClassName("product")
+  ).find((el) => el.querySelector(".product-name").textContent === name);
+
+  if (productDiv) {
+    const addToCartButton = productDiv.querySelector(".add-to-cart-btn");
+    const quantityControls = productDiv.querySelector(".quantity-controls");
+    const quantityText = productDiv.querySelector(
+      ".quantity-controls .quantity"
+    );
+      quantityText.textContent = 1;
+      addToCartButton.style.display = "flex";
+      quantityControls.style.display = "none";
+  }
+  updateCartTotal();
+}
+
 
 function updateQuantity(product, change) {
   const { name, price } = product;
@@ -129,6 +155,7 @@ function showQuantityControls(productClicked) {
 }
 
 function hideQuantityControls(productClicked) {
+  console.log(productClicked);
   const addToCartButton = productClicked.target.closest(".add-to-cart-btn");
   const productBtnContainer = addToCartButton.parentElement;
   const quantityControls =
