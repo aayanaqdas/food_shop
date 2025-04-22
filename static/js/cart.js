@@ -1,86 +1,96 @@
 const cartContentEl = document.getElementById("cart-content");
+const cartProductsArray =
+  JSON.parse(localStorage.getItem("user_cart_products")) || [];
 
 function addToCart(productClicked, product) {
-  const existingProductEl = Array.from(
-    cartContentEl.getElementsByClassName("cart-product")
-  ).find(
-    (el) => el.querySelector(".cart-product-name").textContent === product.name
+  const existingProduct = cartProductsArray.find(
+    (cartProduct) => cartProduct.name === product.name
   );
 
-  if (existingProductEl) {
+  if (existingProduct) {
+    existingProduct.quantity += 1;
     updateQuantity(product, 1);
     showQuantityControls(productClicked);
   } else {
-    const cartLowerEl = document.querySelector(".cart-lower");
-    const emptyCartContentEl = document.querySelector(".cart-empty-content");
-    
+    product.quantity = 1;
+    cartProductsArray.push(product);
+    localStorage.setItem(
+      "user_cart_products",
+      JSON.stringify(cartProductsArray)
+    );
     createCartProduct(product);
     showQuantityControls(productClicked);
-
-    emptyCartContentEl.style.display = "none";
-    cartLowerEl.style.display = "flex";
+    toggleCartVisibility();
   }
 }
 
 function createCartProduct(product) {
-  const { image, name, price } = product;
+  const { image, name, price, quantity } = product;
 
   const cartProductDiv = document.createElement("div");
   cartProductDiv.classList.add("cart-product");
-
   cartProductDiv.innerHTML = `
-        <div class="cart-product-details-wrapper">
-        <img class="cart-product-image" src="${image.thumbnail}" alt="${name}">
-        <div class="cart-product-details">
-          <p class="cart-product-name">${name}</p>
-          <div class="cart-product-quantity_price">
-            <p class="cart-product-quantity">1x</p>
-            <p class="cart-product-default-price">@ $${price.toFixed(2)}</p>
-            <p class="cart-product-total-price">$${price.toFixed(2)}</p>
-          </div>
+    <div class="cart-product-details-wrapper">
+      <img class="cart-product-image" src="${image.thumbnail}" alt="${name}">
+      <div class="cart-product-details">
+        <p class="cart-product-name">${name}</p>
+        <div class="cart-product-quantity_price">
+          <p class="cart-product-quantity">${quantity}x</p>
+          <p class="cart-product-default-price">@ $${price.toFixed(2)}</p>
+          <p class="cart-product-total-price">$${(quantity * price).toFixed(
+            2
+          )}</p>
         </div>
       </div>
-      <button class="cart-remove-product-btn">
-        <img src="./assets/images/icon-remove-item.svg" alt="Remove item" />
-      </button>
+    </div>
+    <button class="cart-remove-product-btn">
+      <img src="./assets/images/icon-remove-item.svg" alt="Remove item" />
+    </button>
   `;
 
-  const removeBtn = cartProductDiv.querySelector(".cart-remove-product-btn");
+  cartProductDiv
+    .querySelector(".cart-remove-product-btn")
+    .addEventListener("click", () => {
+      deleteProduct(product, cartProductDiv);
+    });
 
-  removeBtn.addEventListener("click", () => {
-    deleteProduct(product, cartProductDiv);
-  });
   cartContentEl.appendChild(cartProductDiv);
   updateCartTotal();
 }
 
 function deleteProduct(product, cartProductDiv) {
-  const { name } = product;
   cartProductDiv.remove();
+  const updatedCart = cartProductsArray.filter(
+    (cartProduct) => cartProduct.name !== product.name
+  );
+  updateCartArray(updatedCart);
+
+  // Sync the product grid and reset the quantity text to 1
   const productDiv = Array.from(
     document.getElementsByClassName("product")
-  ).find((el) => el.querySelector(".product-name").textContent === name);
+  ).find(
+    (el) => el.querySelector(".product-name").textContent === product.name
+  );
 
   if (productDiv) {
-    const addToCartButton = productDiv.querySelector(".add-to-cart-btn");
-    const quantityControls = productDiv.querySelector(".quantity-controls");
     const quantityText = productDiv.querySelector(
       ".quantity-controls .quantity"
     );
-    quantityText.textContent = 1;
+    const addToCartButton = productDiv.querySelector(".add-to-cart-btn");
+    const quantityControls = productDiv.querySelector(".quantity-controls");
+
     productDiv.classList.remove("active");
     addToCartButton.style.display = "flex";
     quantityControls.style.display = "none";
+    quantityText.textContent = "1";
   }
+
   updateCartTotal();
 }
 
 function updateQuantity(product, change) {
   const { name, price } = product;
-
-  const existingProductEl = Array.from(
-    cartContentEl.getElementsByClassName("cart-product")
-  ).find((el) => el.querySelector(".cart-product-name").textContent === name);
+  const existingProductEl = findCartProductElement(name);
 
   if (existingProductEl) {
     const quantityEl = existingProductEl.querySelector(
@@ -89,105 +99,114 @@ function updateQuantity(product, change) {
     const totalPriceEl = existingProductEl.querySelector(
       ".cart-product-total-price"
     );
-
-    let currentQuantity = Number(quantityEl.textContent.replace("x", ""));
-    currentQuantity += change;
+    let currentQuantity =
+      Number(quantityEl.textContent.replace("x", "")) + change;
 
     if (currentQuantity <= 0) {
-      existingProductEl.remove();
+      deleteProduct(product, existingProductEl);
     } else {
       quantityEl.textContent = `${currentQuantity}x`;
       totalPriceEl.textContent = `$${(currentQuantity * price).toFixed(2)}`;
-    }
-
-    // Sync the quantity controls in the product grid
-    const productDiv = Array.from(
-      document.getElementsByClassName("product")
-    ).find((el) => el.querySelector(".product-name").textContent === name);
-
-    if (productDiv) {
-      const quantityText = productDiv.querySelector(
-        ".quantity-controls .quantity"
+      updateCartArray(
+        cartProductsArray.map((p) =>
+          p.name === name ? { ...p, quantity: currentQuantity } : p
+        )
       );
-      const addToCartButton = productDiv.querySelector(".add-to-cart-btn");
-      const quantityControls = productDiv.querySelector(".quantity-controls");
-
-      if (currentQuantity <= 0) {
-        // Hide quantity controls and show "Add to Cart" button
-        productDiv.classList.remove("active");
-        addToCartButton.style.display = "flex";
-        quantityControls.style.display = "none";
-      } else {
-        // Display quantity controls so it displays it when page loads on products in cart.
-        productDiv.classList.add("active");
-        addToCartButton.style.display = "none";
-        quantityControls.style.display = "flex";
-        quantityText.textContent = currentQuantity;
-      }
     }
 
+    syncProductGrid(name, currentQuantity);
     updateCartTotal();
   }
 }
 
 function updateCartTotal() {
-  const cartContentEl = document.getElementById("cart-content");
   const cartTotalEl = document.querySelector(".cart-total-number");
   const cartProductCountEl = document.getElementById("cart-product-count");
+  let total = 0,
+    cartProductCount = 0;
 
-  let cartProductCount = Number((cartProductCountEl.textContent = 0));
-  let total = 0;
-  const productEls = cartContentEl.getElementsByClassName("cart-product");
-  Array.from(productEls).forEach((productEl) => {
-    const quantityEl = productEl.querySelector(".cart-product-quantity");
-    let currentQuantity = Number(quantityEl.textContent.replace("x", ""));
-    cartProductCount += currentQuantity;
-    cartProductCountEl.textContent = cartProductCount;
+  Array.from(cartContentEl.getElementsByClassName("cart-product")).forEach(
+    (productEl) => {
+      const quantity = Number(
+        productEl
+          .querySelector(".cart-product-quantity")
+          .textContent.replace("x", "")
+      );
+      const productTotal = parseFloat(
+        productEl
+          .querySelector(".cart-product-total-price")
+          .textContent.replace("$", "")
+      );
+      cartProductCount += quantity;
+      total += productTotal;
+    }
+  );
 
-    const totalPriceEl = productEl.querySelector(".cart-product-total-price");
-    const productTotal = parseFloat(totalPriceEl.textContent.replace("$", ""));
-    total += productTotal;
-  });
-
+  cartProductCountEl.textContent = cartProductCount;
   cartTotalEl.textContent = `$${total.toFixed(2)}`;
-
-  if(cartProductCount === 0){
-    const cartLowerEl = document.querySelector(".cart-lower");
-    const emptyCartContentEl = document.querySelector(".cart-empty-content");
-
-    cartLowerEl.style.display = "none";
-    emptyCartContentEl.style.display = "flex";  
-  
-  }
+  toggleCartVisibility();
 }
 
 function showQuantityControls(productClicked) {
   const productDiv = productClicked.target.closest(".product");
-  const addToCartButton = productClicked.target.closest(".add-to-cart-btn");
-  const productBtnContainer = addToCartButton.parentElement;
-  const quantityControls =
-    productBtnContainer.querySelector(".quantity-controls");
-
   productDiv.classList.add("active");
-  addToCartButton.style.display = "none";
-  quantityControls.style.display = "flex";
+  productDiv.querySelector(".add-to-cart-btn").style.display = "none";
+  productDiv.querySelector(".quantity-controls").style.display = "flex";
 }
 
-function hideQuantityControls(productClicked) {
-  const productDiv = productClicked.target.closest(".product");
-  const addToCartButton = productClicked.target.closest(".add-to-cart-btn");
-  const productBtnContainer = addToCartButton.parentElement;
-  const quantityControls =
-    productBtnContainer.querySelector(".quantity-controls");
-  productDiv.classList.remove("active");
-  addToCartButton.style.display = "flex";
-  quantityControls.style.display = "none";
+function toggleCartVisibility() {
+  const cartLowerEl = document.querySelector(".cart-lower");
+  const emptyCartContentEl = document.querySelector(".cart-empty-content");
+  const isEmpty = cartProductsArray.length === 0;
+
+  cartLowerEl.style.display = isEmpty ? "none" : "flex";
+  emptyCartContentEl.style.display = isEmpty ? "flex" : "none";
 }
 
+function findCartProductElement(name) {
+  return Array.from(cartContentEl.getElementsByClassName("cart-product")).find(
+    (el) => el.querySelector(".cart-product-name").textContent === name
+  );
+}
 
-export {
-  addToCart,
-  updateQuantity,
-  showQuantityControls,
-  hideQuantityControls,
-};
+function syncProductGrid(name, quantity) {
+  const productDiv = Array.from(
+    document.getElementsByClassName("product")
+  ).find((el) => el.querySelector(".product-name").textContent === name);
+
+  if (productDiv) {
+    const quantityText = productDiv.querySelector(
+      ".quantity-controls .quantity"
+    );
+    const addToCartButton = productDiv.querySelector(".add-to-cart-btn");
+    const quantityControls = productDiv.querySelector(".quantity-controls");
+
+    if (quantity <= 0) {
+      productDiv.classList.remove("active");
+      addToCartButton.style.display = "flex";
+      quantityControls.style.display = "none";
+    } else {
+      productDiv.classList.add("active");
+      addToCartButton.style.display = "none";
+      quantityControls.style.display = "flex";
+      quantityText.textContent = quantity;
+    }
+  }
+}
+
+function updateCartArray(updatedCart) {
+  cartProductsArray.length = 0;
+  cartProductsArray.push(...updatedCart);
+  localStorage.setItem("user_cart_products", JSON.stringify(cartProductsArray));
+}
+
+function renderCartOnPageLoad() {
+  if (cartProductsArray.length > 0) {
+    toggleCartVisibility();
+    cartProductsArray.forEach(createCartProduct);
+  }
+}
+
+renderCartOnPageLoad();
+
+export { addToCart, updateQuantity, showQuantityControls };

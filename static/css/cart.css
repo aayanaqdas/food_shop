@@ -38,7 +38,7 @@
   
   .cart-product {
     width: 100%;
-    max-height: 65px;
+    /* height: 65px; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -52,7 +52,9 @@
   }
   
   .cart-product-image{
-      width: 50px;
+      min-width: 50px;
+      max-width: 50px;
+      max-height: 48px;
       border-radius: 10px;
   }
   
@@ -85,8 +87,8 @@
   }
   
   .cart-remove-product-btn {
-    height: 20px;
-    width: 20px;
+    min-height: 20px;
+    min-width: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
