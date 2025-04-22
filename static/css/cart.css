@@ -23,6 +23,18 @@
     flex-direction: column;
     gap: 20px;
   }
+
+  .cart-empty-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cart-empty-text{
+    color: var(--Rose-400);
+    font-weight: 600;
+  }
   
   .cart-product {
     width: 100%;
@@ -82,6 +94,12 @@
     border: 2px solid var(--Rose-300);
     border-radius: 50%;
     cursor: pointer;
+  }
+
+  .cart-lower{
+    display: none;
+    flex-direction: column;
+    gap: 30px;
   }
   
   .cart-total {

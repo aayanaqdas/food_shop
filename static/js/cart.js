@@ -11,8 +11,14 @@ function addToCart(productClicked, product) {
     updateQuantity(product, 1);
     showQuantityControls(productClicked);
   } else {
+    const cartLowerEl = document.querySelector(".cart-lower");
+    const emptyCartContentEl = document.querySelector(".cart-empty-content");
+    
     createCartProduct(product);
     showQuantityControls(productClicked);
+
+    emptyCartContentEl.style.display = "none";
+    cartLowerEl.style.display = "flex";
   }
 }
 
@@ -35,7 +41,7 @@ function createCartProduct(product) {
         </div>
       </div>
       <button class="cart-remove-product-btn">
-        <img src="assets/images/icon-remove-item.svg" alt="Remove item" />
+        <img src="./assets/images/icon-remove-item.svg" alt="Remove item" />
       </button>
   `;
 
@@ -49,7 +55,7 @@ function createCartProduct(product) {
 }
 
 function deleteProduct(product, cartProductDiv) {
-  const {name} = product;
+  const { name } = product;
   cartProductDiv.remove();
   const productDiv = Array.from(
     document.getElementsByClassName("product")
@@ -61,13 +67,13 @@ function deleteProduct(product, cartProductDiv) {
     const quantityText = productDiv.querySelector(
       ".quantity-controls .quantity"
     );
-      quantityText.textContent = 1;
-      addToCartButton.style.display = "flex";
-      quantityControls.style.display = "none";
+    quantityText.textContent = 1;
+    productDiv.classList.remove("active");
+    addToCartButton.style.display = "flex";
+    quantityControls.style.display = "none";
   }
   updateCartTotal();
 }
-
 
 function updateQuantity(product, change) {
   const { name, price } = product;
@@ -108,10 +114,12 @@ function updateQuantity(product, change) {
 
       if (currentQuantity <= 0) {
         // Hide quantity controls and show "Add to Cart" button
+        productDiv.classList.remove("active");
         addToCartButton.style.display = "flex";
         quantityControls.style.display = "none";
       } else {
         // Display quantity controls so it displays it when page loads on products in cart.
+        productDiv.classList.add("active");
         addToCartButton.style.display = "none";
         quantityControls.style.display = "flex";
         quantityText.textContent = currentQuantity;
@@ -142,28 +150,40 @@ function updateCartTotal() {
   });
 
   cartTotalEl.textContent = `$${total.toFixed(2)}`;
+
+  if(cartProductCount === 0){
+    const cartLowerEl = document.querySelector(".cart-lower");
+    const emptyCartContentEl = document.querySelector(".cart-empty-content");
+
+    cartLowerEl.style.display = "none";
+    emptyCartContentEl.style.display = "flex";  
+  
+  }
 }
 
 function showQuantityControls(productClicked) {
+  const productDiv = productClicked.target.closest(".product");
   const addToCartButton = productClicked.target.closest(".add-to-cart-btn");
   const productBtnContainer = addToCartButton.parentElement;
   const quantityControls =
     productBtnContainer.querySelector(".quantity-controls");
 
+  productDiv.classList.add("active");
   addToCartButton.style.display = "none";
   quantityControls.style.display = "flex";
 }
 
 function hideQuantityControls(productClicked) {
-  console.log(productClicked);
+  const productDiv = productClicked.target.closest(".product");
   const addToCartButton = productClicked.target.closest(".add-to-cart-btn");
   const productBtnContainer = addToCartButton.parentElement;
   const quantityControls =
     productBtnContainer.querySelector(".quantity-controls");
-
+  productDiv.classList.remove("active");
   addToCartButton.style.display = "flex";
   quantityControls.style.display = "none";
 }
+
 
 export {
   addToCart,

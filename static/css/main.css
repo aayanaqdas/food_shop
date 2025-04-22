@@ -72,6 +72,10 @@ body {
   border-radius: 15px;
 }
 
+.product.active .product-image{
+  border: 2px solid var(--Red);
+}
+
 .product-btn-container {
   margin-top: -37px;
   display: flex;

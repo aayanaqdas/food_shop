@@ -10,8 +10,8 @@
       sizes="32x32"
       href="./assets/images/favicon-32x32.png"
     />
-    <link rel="stylesheet" href="/static/css/main.css" />
-    <link rel="stylesheet" href="/static/css/cart.css">
+    <link rel="stylesheet" href="./static/css/main.css" />
+    <link rel="stylesheet" href="./static/css/cart.css" />
 
     <title>Food shop</title>
   </head>
@@ -24,17 +24,29 @@
 
         <div class="cart-container">
           <div class="cart">
-            <h2 class="cart-header">Your cart (<span id="cart-product-count">0</span>)</h2>
-            <div id="cart-content"></div>
-            <div class="cart-total">
-              <p class="cart-total-text">Order Total</p>
-              <p class="cart-total-number">$0</p>
+            <h2 class="cart-header">
+              Your cart (<span id="cart-product-count">0</span>)
+            </h2>
+            <div id="cart-content">
+              <div class="cart-empty-content">
+                <img
+                  src="./assets/images/illustration-empty-cart.svg"
+                  alt="empty cart"
+                />
+                <p class="cart-empty-text">Your added items will appear here</p>
+              </div>
             </div>
-            <button class="cart-order-confirm-btn">Confirm order</button>
+            <div class="cart-lower">
+              <div class="cart-total">
+                <p class="cart-total-text">Order Total</p>
+                <p class="cart-total-number">$0</p>
+              </div>
+              <button class="cart-order-confirm-btn">Confirm order</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <script type="module" src="/static/js/main.js"></script>
+    <script type="module" src="./static/js/main.js"></script>
   </body>
 </html>

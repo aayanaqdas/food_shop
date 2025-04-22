@@ -15,12 +15,12 @@ function createProductElement(productData) {
       <img class="product-image" src="${imagePath}" alt="Image of ${name}">
       <div class="product-btn-container">
         <button class="add-to-cart-btn">
-          <img src="/assets/images/icon-add-to-cart.svg" alt="Add to cart">Add to cart
+          <img src="./assets/images/icon-add-to-cart.svg" alt="Add to cart">Add to cart
         </button>
-        <div class="quantity-controls" style="display: none;">
-          <button class="decrement-btn"><img src="assets/images/icon-decrement-quantity.svg" alt="" /></button>
+        <div class="quantity-controls">
+          <button class="decrement-btn"><img src="./assets/images/icon-decrement-quantity.svg" alt="" /></button>
           <p class="quantity">1</p>
-          <button class="increment-btn"><img src="assets/images/icon-increment-quantity.svg" alt="" /></button>
+          <button class="increment-btn"><img src="./assets/images/icon-increment-quantity.svg" alt="" /></button>
         </div>
       </div>
       <div class="product-details">
