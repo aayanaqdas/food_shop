@@ -56,8 +56,6 @@ body {
   padding: 20px;
 }
 
-
-
 .header {
   font-size: 40px;
   font-weight: 700;
@@ -88,7 +86,7 @@ body {
   border-radius: 15px;
 }
 
-.product.active .product-image{
+.product.active .product-image {
   border: 2px solid var(--Red);
 }
 
@@ -153,7 +151,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 16px;
 }
 
@@ -168,6 +166,7 @@ body {
 
 .product-price {
   color: var(--Red);
+  font-weight: 700;
 }
 
 @media only screen and (max-width: 570px) {
