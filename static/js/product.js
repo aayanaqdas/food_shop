@@ -31,9 +31,7 @@ function createProductElement(productData) {
     `;
 
     const addToCartButton = productDiv.querySelector(".add-to-cart-btn");
-    addToCartButton.addEventListener("click", (event) =>
-      addToCart(event, product)
-    );
+    addToCartButton.addEventListener("click", (event) => addToCart(event, product));
 
     const incrementButton = productDiv.querySelector(".increment-btn");
     const decrementButton = productDiv.querySelector(".decrement-btn");
@@ -49,8 +47,7 @@ function createProductElement(productData) {
     });
 
     productsGrid.appendChild(productDiv);
-    updateQuantity(product, 0)
- 
+    updateQuantity(product, 0);
   });
 }
 

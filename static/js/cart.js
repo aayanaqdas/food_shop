@@ -1,6 +1,7 @@
+import { createOrderedProducts, toggleOrderModalVisibility } from "./orderConfirmation.js";
+
 const cartContentEl = document.getElementById("cart-content");
-const cartProductsArray =
-  JSON.parse(localStorage.getItem("user_cart_products")) || [];
+const cartProductsArray = JSON.parse(localStorage.getItem("user_cart_products")) || [];
 
 function addToCart(productClicked, product) {
   const existingProduct = cartProductsArray.find(
@@ -14,10 +15,7 @@ function addToCart(productClicked, product) {
   } else {
     product.quantity = 1;
     cartProductsArray.push(product);
-    localStorage.setItem(
-      "user_cart_products",
-      JSON.stringify(cartProductsArray)
-    );
+    localStorage.setItem("user_cart_products", JSON.stringify(cartProductsArray));
     createCartProduct(product);
     showQuantityControls(productClicked);
     toggleCartVisibility();
@@ -37,9 +35,7 @@ function createCartProduct(product) {
         <div class="cart-product-quantity_price">
           <p class="cart-product-quantity">${quantity}x</p>
           <p class="cart-product-default-price">@ $${price.toFixed(2)}</p>
-          <p class="cart-product-total-price">$${(quantity * price).toFixed(
-            2
-          )}</p>
+          <p class="cart-product-total-price">$${(quantity * price).toFixed(2)}</p>
         </div>
       </div>
     </div>
@@ -48,11 +44,9 @@ function createCartProduct(product) {
     </button>
   `;
 
-  cartProductDiv
-    .querySelector(".cart-remove-product-btn")
-    .addEventListener("click", () => {
-      deleteProduct(product, cartProductDiv);
-    });
+  cartProductDiv.querySelector(".cart-remove-product-btn").addEventListener("click", () => {
+    deleteProduct(product, cartProductDiv);
+  });
 
   cartContentEl.appendChild(cartProductDiv);
   updateCartTotal();
@@ -60,22 +54,16 @@ function createCartProduct(product) {
 
 function deleteProduct(product, cartProductDiv) {
   cartProductDiv.remove();
-  const updatedCart = cartProductsArray.filter(
-    (cartProduct) => cartProduct.name !== product.name
-  );
+  const updatedCart = cartProductsArray.filter((cartProduct) => cartProduct.name !== product.name);
   updateCartArray(updatedCart);
 
   // Sync the product grid and reset the quantity text to 1
-  const productDiv = Array.from(
-    document.getElementsByClassName("product")
-  ).find(
+  const productDiv = Array.from(document.getElementsByClassName("product")).find(
     (el) => el.querySelector(".product-name").textContent === product.name
   );
 
   if (productDiv) {
-    const quantityText = productDiv.querySelector(
-      ".quantity-controls .quantity"
-    );
+    const quantityText = productDiv.querySelector(".quantity-controls .quantity");
     const addToCartButton = productDiv.querySelector(".add-to-cart-btn");
     const quantityControls = productDiv.querySelector(".quantity-controls");
 
@@ -93,14 +81,9 @@ function updateQuantity(product, change) {
   const existingProductEl = findCartProductElement(name);
 
   if (existingProductEl) {
-    const quantityEl = existingProductEl.querySelector(
-      ".cart-product-quantity"
-    );
-    const totalPriceEl = existingProductEl.querySelector(
-      ".cart-product-total-price"
-    );
-    let currentQuantity =
-      Number(quantityEl.textContent.replace("x", "")) + change;
+    const quantityEl = existingProductEl.querySelector(".cart-product-quantity");
+    const totalPriceEl = existingProductEl.querySelector(".cart-product-total-price");
+    let currentQuantity = Number(quantityEl.textContent.replace("x", "")) + change;
 
     if (currentQuantity <= 0) {
       deleteProduct(product, existingProductEl);
@@ -108,9 +91,7 @@ function updateQuantity(product, change) {
       quantityEl.textContent = `${currentQuantity}x`;
       totalPriceEl.textContent = `$${(currentQuantity * price).toFixed(2)}`;
       updateCartArray(
-        cartProductsArray.map((p) =>
-          p.name === name ? { ...p, quantity: currentQuantity } : p
-        )
+        cartProductsArray.map((p) => (p.name === name ? { ...p, quantity: currentQuantity } : p))
       );
     }
 
@@ -122,25 +103,19 @@ function updateQuantity(product, change) {
 function updateCartTotal() {
   const cartTotalEl = document.querySelector(".cart-total-number");
   const cartProductCountEl = document.getElementById("cart-product-count");
-  let total = 0,
-    cartProductCount = 0;
+  let total = 0;
+  let cartProductCount = 0;
 
-  Array.from(cartContentEl.getElementsByClassName("cart-product")).forEach(
-    (productEl) => {
-      const quantity = Number(
-        productEl
-          .querySelector(".cart-product-quantity")
-          .textContent.replace("x", "")
-      );
-      const productTotal = parseFloat(
-        productEl
-          .querySelector(".cart-product-total-price")
-          .textContent.replace("$", "")
-      );
-      cartProductCount += quantity;
-      total += productTotal;
-    }
-  );
+  Array.from(cartContentEl.getElementsByClassName("cart-product")).forEach((productEl) => {
+    const quantity = Number(
+      productEl.querySelector(".cart-product-quantity").textContent.replace("x", "")
+    );
+    const productTotal = parseFloat(
+      productEl.querySelector(".cart-product-total-price").textContent.replace("$", "")
+    );
+    cartProductCount += quantity;
+    total += productTotal;
+  });
 
   cartProductCountEl.textContent = cartProductCount;
   cartTotalEl.textContent = `$${total.toFixed(2)}`;
@@ -170,14 +145,12 @@ function findCartProductElement(name) {
 }
 
 function syncProductGrid(name, quantity) {
-  const productDiv = Array.from(
-    document.getElementsByClassName("product")
-  ).find((el) => el.querySelector(".product-name").textContent === name);
+  const productDiv = Array.from(document.getElementsByClassName("product")).find(
+    (el) => el.querySelector(".product-name").textContent === name
+  );
 
   if (productDiv) {
-    const quantityText = productDiv.querySelector(
-      ".quantity-controls .quantity"
-    );
+    const quantityText = productDiv.querySelector(".quantity-controls .quantity");
     const addToCartButton = productDiv.querySelector(".add-to-cart-btn");
     const quantityControls = productDiv.querySelector(".quantity-controls");
 
@@ -185,6 +158,7 @@ function syncProductGrid(name, quantity) {
       productDiv.classList.remove("active");
       addToCartButton.style.display = "flex";
       quantityControls.style.display = "none";
+      quantityText.textContent = 1;
     } else {
       productDiv.classList.add("active");
       addToCartButton.style.display = "none";
@@ -200,13 +174,40 @@ function updateCartArray(updatedCart) {
   localStorage.setItem("user_cart_products", JSON.stringify(cartProductsArray));
 }
 
+function clearCart() {
+  updateCartArray([]);
+  const productDivs = Array.from(document.getElementsByClassName("cart-product"));
+  productDivs.forEach((productDiv) => {
+    const productName = productDiv.querySelector(".cart-product-name").textContent;
+    syncProductGrid(productName, 0);
+    productDiv.remove();
+  });
+  updateCartTotal();
+  toggleCartVisibility();
+}
+
 function renderCartOnPageLoad() {
   if (cartProductsArray.length > 0) {
     toggleCartVisibility();
     cartProductsArray.forEach(createCartProduct);
   }
+
+  const confirmOrderBtn = document.querySelector(".cart-order-confirm-btn");
+  confirmOrderBtn.addEventListener("click", () => {
+    createOrderedProducts();
+    toggleOrderModalVisibility();
+    clearCart();
+  });
 }
 
 renderCartOnPageLoad();
 
-export { addToCart, updateQuantity, showQuantityControls };
+export {
+  addToCart,
+  updateQuantity,
+  showQuantityControls,
+  toggleCartVisibility,
+  syncProductGrid,
+  updateCartArray,
+  clearCart,
+};

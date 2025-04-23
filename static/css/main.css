@@ -1,6 +1,22 @@
 @font-face {
   font-family: "Red Hat Text";
   src: url("../../assets/fonts/static/RedHatText-Regular.ttf") format("truetype");
+  font-weight: 400; /* Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("../../assets/fonts/static/RedHatText-SemiBold.ttf") format("truetype");
+  font-weight: 600; /* SemiBold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("../../assets/fonts/static/RedHatText-Bold.ttf") format("truetype");
+  font-weight: 700; /* Bold */
+  font-style: normal;
 }
 
 :root {
@@ -44,7 +60,7 @@ body {
 
 .header {
   font-size: 40px;
-  font-weight: 900;
+  font-weight: 700;
   color: var(--Rose-900);
   grid-row: 1;
   grid-column: 1/-1;

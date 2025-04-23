@@ -83,7 +83,12 @@
   }
   
   .cart-product-default-price {
-    color: var(--Rose-300);
+    color: var(--Rose-400);
+  }
+
+  .cart-product-total-price{
+    color: var(--Rose-900);
+    font-weight: 600;
   }
   
   .cart-remove-product-btn {
