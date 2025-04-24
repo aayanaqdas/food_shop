@@ -169,7 +169,7 @@
     align-items: flex-end;
     z-index: 1000;
   }
-  
+
   .order-confirm-modal {
     width: 100%;
     max-width: 100%;
@@ -182,7 +182,7 @@
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .order-confirm-header {
     color: var(--Rose-900);
     font-weight: 700;
@@ -192,14 +192,14 @@
     font-weight: 600;
     font-size: 12px;
   }
-  
+
   .order-products-container {
     background-color: var(--Rose-100);
     display: flex;
     flex-direction: column;
     border-radius: 10px;
   }
-  
+
   #order-products {
     display: flex;
     flex-direction: column;
