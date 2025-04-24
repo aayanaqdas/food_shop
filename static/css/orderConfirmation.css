@@ -155,3 +155,57 @@
 .order-close-btn:hover {
   filter: brightness(0.8);
 }
+
+@media only screen and (max-width: 431px) {
+  .order-confirm-modal-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: flex-end;
+    align-items: flex-end;
+    z-index: 1000;
+  }
+  
+  .order-confirm-modal {
+    width: 100%;
+    max-width: 100%;
+    height: 90%;
+    background-color: var(--Rose-50);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .order-confirm-header {
+    color: var(--Rose-900);
+    font-weight: 700;
+  }
+  .order-confirm-text {
+    color: var(--Rose-300);
+    font-weight: 600;
+    font-size: 12px;
+  }
+  
+  .order-products-container {
+    background-color: var(--Rose-100);
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+  }
+  
+  #order-products {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 20px;
+  }
+}
