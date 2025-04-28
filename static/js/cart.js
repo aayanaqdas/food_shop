@@ -23,24 +23,25 @@ function addToCart(productClicked, product) {
 }
 
 function createCartProduct(product) {
-  const { image, name, price, quantity } = product;
+  const { thumbnail_image, name, price, quantity } = product;
 
+  const formatPrice = Number(price).toFixed(2);
   const cartProductDiv = document.createElement("div");
   cartProductDiv.classList.add("cart-product");
   cartProductDiv.innerHTML = `
     <div class="cart-product-details-wrapper">
-      <img class="cart-product-image" src="${image.thumbnail}" alt="${name}">
+      <img class="cart-product-image" src="${thumbnail_image}" alt="${name}">
       <div class="cart-product-details">
         <p class="cart-product-name">${name}</p>
         <div class="cart-product-quantity_price">
           <p class="cart-product-quantity">${quantity}x</p>
-          <p class="cart-product-default-price">@ $${price.toFixed(2)}</p>
-          <p class="cart-product-total-price">$${(quantity * price).toFixed(2)}</p>
+          <p class="cart-product-default-price">@ $${formatPrice}</p>
+          <p class="cart-product-total-price">$${(quantity * formatPrice).toFixed(2)}</p>
         </div>
       </div>
     </div>
     <button class="cart-remove-product-btn">
-      <img src="./assets/images/icon-remove-item.svg" alt="Remove item" />
+      <img src="../static/assets/images/icon-remove-item.svg" alt="Remove item" />
     </button>
   `;
 

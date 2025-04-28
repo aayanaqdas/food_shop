@@ -4,10 +4,9 @@ function createProductElement(productData) {
   const productsGrid = document.getElementById("productsGrid");
 
   productData.forEach((product) => {
-    const { image, name, category, price } = product;
+    const { desktop_image, mobile_image, name, category, price } = product;
 
-    const imagePath = window.innerWidth <= "570" ? image.mobile : image.desktop;
-
+    const imagePath = window.innerWidth <= "570" ? mobile_image : desktop_image;
     const productDiv = document.createElement("div");
     productDiv.classList.add("product");
 
@@ -15,18 +14,18 @@ function createProductElement(productData) {
       <img class="product-image" src="${imagePath}" alt="Image of ${name}">
       <div class="product-btn-container">
         <button class="add-to-cart-btn">
-          <img src="./assets/images/icon-add-to-cart.svg" alt="Add to cart">Add to cart
+          <img src="../static/assets/images/icon-add-to-cart.svg" alt="Add to cart">Add to cart
         </button>
         <div class="quantity-controls">
-          <button class="decrement-btn"><img src="./assets/images/icon-decrement-quantity.svg" alt="" /></button>
+          <button class="decrement-btn"><img src="../static/assets/images/icon-decrement-quantity.svg" alt="decrement" /></button>
           <p class="quantity">1</p>
-          <button class="increment-btn"><img src="./assets/images/icon-increment-quantity.svg" alt="" /></button>
+          <button class="increment-btn"><img src="../static/assets/images/icon-increment-quantity.svg" alt="increment" /></button>
         </div>
       </div>
       <div class="product-details">
         <p class="product-category">${category}</p>
         <p class="product-name">${name}</p>
-        <p class="product-price">$${price.toFixed(2)}</p>
+        <p class="product-price">$${Number(price).toFixed(2)}</p>
       </div>
     `;
 

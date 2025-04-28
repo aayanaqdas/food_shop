@@ -1,3 +1,5 @@
 design
 *.md
 preview.jpg
+*.log
+*.env

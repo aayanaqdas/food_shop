@@ -1,0 +1,28 @@
+import os
+from flask import Flask, g
+import mysql.connector
+from app.routes import routes
+from app.api import api
+from app.config import Config
+
+def create_app():
+    app = Flask(__name__, template_folder='../templates', static_folder='../static')
+    app.config.from_object(Config)
+
+    def get_db():
+        if 'db' not in g:            
+            g.db = mysql.connector.connect(**app.config['DATABASE_CONFIG'])
+            return g.db
+
+    # Close DB connection after each request
+    @app.teardown_appcontext
+    def close_db(exception):
+        db = g.pop('db', None)
+        if db is not None:
+            db.close()
+            
+    app.get_db = get_db   
+    app.register_blueprint(routes)
+    app.register_blueprint(api)
+
+    return app
