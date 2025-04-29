@@ -27,6 +27,11 @@
   color: var(--Rose-900);
   font-weight: 700;
 }
+
+.order-confirm-id{
+  color: var(--Rose-900);
+  font-weight: 700;
+}
 .order-confirm-text {
   color: var(--Rose-300);
   font-weight: 600;

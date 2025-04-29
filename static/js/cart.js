@@ -1,4 +1,4 @@
-import { createOrderedProducts, toggleOrderModalVisibility } from "./orderConfirmation.js";
+import { createOrder } from "./orderConfirmation.js";
 
 const cartContentEl = document.getElementById("cart-content");
 const cartProductsArray = JSON.parse(localStorage.getItem("user_cart_products")) || [];
@@ -23,11 +23,11 @@ function addToCart(productClicked, product) {
 }
 
 function createCartProduct(product) {
-  const { thumbnail_image, name, price, quantity } = product;
-
-  const formatPrice = Number(price).toFixed(2);
+  const { thumbnail_image, name, price, quantity, product_id } = product;
+;
   const cartProductDiv = document.createElement("div");
   cartProductDiv.classList.add("cart-product");
+  cartProductDiv.setAttribute("data-id", product_id)
   cartProductDiv.innerHTML = `
     <div class="cart-product-details-wrapper">
       <img class="cart-product-image" src="${thumbnail_image}" alt="${name}">
@@ -35,8 +35,8 @@ function createCartProduct(product) {
         <p class="cart-product-name">${name}</p>
         <div class="cart-product-quantity_price">
           <p class="cart-product-quantity">${quantity}x</p>
-          <p class="cart-product-default-price">@ $${formatPrice}</p>
-          <p class="cart-product-total-price">$${(quantity * formatPrice).toFixed(2)}</p>
+          <p class="cart-product-default-price">@ $${price}</p>
+          <p class="cart-product-total-price">$${(quantity * price).toFixed(2)}</p>
         </div>
       </div>
     </div>
@@ -195,9 +195,7 @@ function renderCartOnPageLoad() {
 
   const confirmOrderBtn = document.querySelector(".cart-order-confirm-btn");
   confirmOrderBtn.addEventListener("click", () => {
-    createOrderedProducts();
-    toggleOrderModalVisibility();
-    clearCart();
+    createOrder();
   });
 }
 

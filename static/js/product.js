@@ -4,11 +4,12 @@ function createProductElement(productData) {
   const productsGrid = document.getElementById("productsGrid");
 
   productData.forEach((product) => {
-    const { desktop_image, mobile_image, name, category, price } = product;
+    const { desktop_image, mobile_image, name, category, price, product_id } = product;
 
     const imagePath = window.innerWidth <= "570" ? mobile_image : desktop_image;
     const productDiv = document.createElement("div");
     productDiv.classList.add("product");
+    productDiv.setAttribute("data-id", product_id);
 
     productDiv.innerHTML = `
       <img class="product-image" src="${imagePath}" alt="Image of ${name}">
@@ -25,7 +26,7 @@ function createProductElement(productData) {
       <div class="product-details">
         <p class="product-category">${category}</p>
         <p class="product-name">${name}</p>
-        <p class="product-price">$${Number(price).toFixed(2)}</p>
+        <p class="product-price">$${price}</p>
       </div>
     `;
 

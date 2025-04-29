@@ -1,30 +1,47 @@
-const closeBtn = document.querySelector(".order-close-btn");
+import { clearCart } from "./cart.js";
 
-closeBtn.addEventListener("click", toggleOrderModalVisibility);
+async function createOrder(){
+  const cartProducts = JSON.parse(localStorage.getItem("user_cart_products"));
+  try{
+    const response = await fetch("/api/order", {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "user_id": 1,
+        "cart_products": cartProducts
+      })
+    })
+    if (!response) return;
 
-function toggleOrderModalVisibility() {
-  const modalContainer = document.querySelector(".order-confirm-modal-container");
-  const orderProductsContainer = document.getElementById("order-products");
-  if (modalContainer.style.display === "flex") {
-    modalContainer.style.display = "none";
-    document.body.style.overflow = "visible";
-    orderProductsContainer.innerHTML = "";
-  } else {
-    modalContainer.style.display = "flex";
-    document.body.style.overflow = "hidden";
+    const data = await response.json();
+    if(data.status == "success"){
+      console.log(data.message)
+      console.log(data.order_id)
+      createOrderedProducts(data.order_id);     
+      toggleOrderModalVisibility();
+      clearCart();
+    }
+  }
+  catch(error){
+    console.log(error)
   }
 }
 
-function createOrderedProducts() {
+
+function createOrderedProducts(order_id) {
   const cartProducts = JSON.parse(localStorage.getItem("user_cart_products"));
+  const orderIdEl = document.querySelector(".order-confirm-id");
   const orderProductsContainer = document.getElementById("order-products");
   const orderTotalEl = document.querySelector(".order-total-number");
   let totalOrderPrice = 0;
 
+  orderIdEl.textContent = "#" + order_id;
+
   cartProducts.forEach((product) => {
     const { name, price, thumbnail_image, quantity } = product;
-    const formatPrice = Number(price).toFixed(2);
-    const totalProductPrice = formatPrice * quantity;
+    const totalProductPrice = Number(price) * quantity;
     totalOrderPrice += totalProductPrice;
 
     const productDiv = document.createElement("div");
@@ -38,7 +55,7 @@ function createOrderedProducts() {
                       <p class="order-product-name">${name}</p>
                       <div class="order-product-quantity_price">
                         <p class="order-product-quantity">${quantity}x</p>
-                        <p class="order-product-default-price">@ $${formatPrice}</p>
+                        <p class="order-product-default-price">@ $${price}</p>
                       </div>
                     </div>
                   </div>
@@ -51,4 +68,20 @@ function createOrderedProducts() {
   orderTotalEl.textContent = `$${totalOrderPrice.toFixed(2)}`;
 }
 
-export { createOrderedProducts, toggleOrderModalVisibility };
+const closeBtn = document.querySelector(".order-close-btn");
+closeBtn.addEventListener("click", toggleOrderModalVisibility);
+function toggleOrderModalVisibility() {
+  const modalContainer = document.querySelector(".order-confirm-modal-container");
+  const orderProductsContainer = document.getElementById("order-products");
+  if (modalContainer.style.display === "flex") {
+    modalContainer.style.display = "none";
+    document.body.style.overflow = "visible";
+    orderProductsContainer.innerHTML = "";
+  } else {
+    modalContainer.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+}
+
+
+export { createOrder };

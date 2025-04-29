@@ -3,3 +3,7 @@ design
 preview.jpg
 *.log
 *.env
+*.pyc
+__pycache__/
+app/__pycache__/
+
