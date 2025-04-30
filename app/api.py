@@ -1,7 +1,7 @@
 from flask import Blueprint, current_app, jsonify, request
-import mysql.connector
-import json
 import logging
+import random
+import string
 
 api = Blueprint('api', __name__)
 
@@ -25,6 +25,10 @@ def get_products():
          return jsonify({'status': 'error', 'message': 'Failed to retrieve products', 'error': str(e)}), 500
 
 
+def generate_order_id():
+    """Generate a short, unique order ID."""
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+
 @api.route('/api/order', methods=['POST'])
 def create_order():
     try:
@@ -37,7 +41,7 @@ def create_order():
 
         conn = current_app.get_db()
         cursor = conn.cursor()
-
+        order_id = generate_order_id()
         # Validate and calculate order total
         order_total = 0
         for product in cart_products:
@@ -51,10 +55,11 @@ def create_order():
                 product['total_price'] = total_price  # Add total_price to product
             except (ValueError, KeyError):
                 return jsonify({'status': 'error', 'message': 'Invalid product data'}), 400
+            
+        
 
         # Insert order into Orders table
-        cursor.execute("INSERT INTO Orders (user_id, order_total) VALUES (%s, %s)", (user_id, order_total))
-        order_id = cursor.lastrowid
+        cursor.execute("INSERT INTO Orders (order_id, user_id, order_total) VALUES (%s, %s, %s)", (order_id, user_id, order_total))
 
         # Insert each product into OrderDetails table
         for product in cart_products:

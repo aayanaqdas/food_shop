@@ -21,7 +21,7 @@ CREATE TABLE Products (
 
 -- Orders table for storing order history
 CREATE TABLE Orders (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id VARCHAR(10) PRIMARY KEY,
     user_id INT NOT NULL,
     order_total DECIMAL(10, 2) NOT NULL,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -31,7 +31,7 @@ CREATE TABLE Orders (
 -- OrderDetails table for storing details of products in each order
 CREATE TABLE OrderDetails (
     order_detail_id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
+    order_id VARCHAR(10) NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
     total_price DECIMAL(10, 2) NOT NULL,
