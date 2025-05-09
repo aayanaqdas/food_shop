@@ -40,6 +40,7 @@ CREATE TABLE OrderDetails (
 );
 
 -- Cart table for storing user's cart items
+-- Not using
 CREATE TABLE Cart (
     cart_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,

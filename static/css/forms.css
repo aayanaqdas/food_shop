@@ -1,0 +1,81 @@
+ .form-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+
+  .login-form, .signup-form {
+    background-color: var(--Rose-50);
+    width: 400px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+    color: var(--Rose-900);
+  }
+
+  .login-form h1, .signup-form h1{
+    color: var(--Rose-900);
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  .form-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-input-group{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .form-input-group input{
+    font-size: 16px;
+    padding: 13px;
+    border-radius: 6px;
+    border: none;
+    background-color: var(--Rose-100);
+  }
+
+  .form-input-group input:focus{
+    outline: 1px solid var(--Rose-300);
+  }
+
+  .form-link{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--Rose-900);
+  }
+
+  .form-error-message {
+    display: none;
+    text-align: center;
+    background-color: hsl(0, 80%, 90%); 
+    color: hsl(0, 50%, 44%); 
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+  .form-submit-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 13px;
+    background-color: var(--Red);
+    color: var(--Rose-50);
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 50px;
+  }
+  
+  .form-submit-btn:hover {
+    filter: brightness(0.8);
+  }
