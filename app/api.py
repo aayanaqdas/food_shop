@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, jsonify, request
+from flask import Blueprint, current_app, jsonify, request, session
 import logging
 import random
 import string
@@ -32,16 +32,21 @@ def generate_order_id():
 @api.route('/api/order', methods=['POST'])
 def create_order():
     try:
+        # Ensure the user is logged in
+        if 'user_id' not in session:
+            return jsonify({'status': 'error', 'message': 'User not logged in'}), 401
+
+        user_id = session['user_id']  # Get the user_id from the session
         data = request.json
-        user_id = data.get('user_id')
         cart_products = data.get('cart_products')
 
-        if not user_id or not cart_products:
+        if not cart_products:
             return jsonify({'status': 'error', 'message': 'Invalid data'}), 400
 
         conn = current_app.get_db()
         cursor = conn.cursor()
         order_id = generate_order_id()
+
         # Validate and calculate order total
         order_total = 0
         for product in cart_products:
@@ -55,8 +60,6 @@ def create_order():
                 product['total_price'] = total_price  # Add total_price to product
             except (ValueError, KeyError):
                 return jsonify({'status': 'error', 'message': 'Invalid product data'}), 400
-            
-        
 
         # Insert order into Orders table
         cursor.execute("INSERT INTO Orders (order_id, user_id, order_total) VALUES (%s, %s, %s)", (order_id, user_id, order_total))

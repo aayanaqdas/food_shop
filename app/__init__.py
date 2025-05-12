@@ -1,9 +1,9 @@
-import os
 from flask import Flask, g
 import mysql.connector
 from app.routes import routes
 from app.api import api
 from app.config import Config
+from app.auth import auth
 
 def create_app():
     app = Flask(__name__, template_folder='../templates', static_folder='../static')
@@ -24,5 +24,6 @@ def create_app():
     app.get_db = get_db   
     app.register_blueprint(routes)
     app.register_blueprint(api)
+    app.register_blueprint(auth)
 
     return app

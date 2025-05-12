@@ -11,3 +11,5 @@ class Config:
         'host': os.getenv('DB_host'),
         'database': os.getenv('DB_name')
     }
+
+    SECRET_KEY = os.getenv("SECRET_KEY")

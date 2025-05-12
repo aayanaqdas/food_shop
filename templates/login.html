@@ -19,19 +19,27 @@
         </div>
     </nav>
     <div class="form-container">
-      <form class="login-form" id="loginForm">
+      <form class="login-form" id="loginForm" method="POST" action="/login">
         <h1>Login</h1>
         <div class="form-inputs">
           <div class="form-input-group">
             <label for="email">Email:</label>
-            <input type="email" name="email" placeholder="Enter your email"/>
+            <input class="login-email-input" type="email" name="email" placeholder="Enter your email"/>
           </div>
           <div class="form-input-group">
             <label for="password">Password:</label>
-            <input type="password" name="password" placeholder="Enter your password"/>
+            <input class="login-password-input" type="password" name="password" placeholder="Enter your password"/>
           </div>
         </div>
-        <div class="form-error-message"></div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}          
+            <div class="form-{{ category }}-message">
+                <p>{{ message }}</p>
+            </div>
+              {% endfor %}            
+          {% endif %}
+        {% endwith %}
         <p class="form-link">Don't have an account? <a href="/signup">Signup</a></p>
         
         <button type="submit" class="form-submit-btn">Login</button>
