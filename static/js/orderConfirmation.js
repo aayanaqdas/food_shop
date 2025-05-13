@@ -1,31 +1,49 @@
 import { clearCart } from "./cart.js";
 
-async function createOrder(){
+async function createOrder() {
   const cartProducts = JSON.parse(localStorage.getItem("user_cart_products"));
-  try{
-    const response = await fetch("/api/order", {
-      method: 'POST',
+
+  if (!cartProducts || cartProducts.length === 0) {
+    console.error("Cart is empty. Cannot create an order.");
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/create_order", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "user_id": 1,
-        "cart_products": cartProducts
-      })
-    })
-    if (!response) return;
+        cart_products: cartProducts,
+      }),
+    });
+
+    if (!response.ok) {
+      // Handle HTTP errors
+      if (response.status === 401) {
+        console.error("User not logged in. Redirecting to login page...");
+        window.location.href = "/login";
+      } else {
+        const errorData = await response.json();
+        console.error("Error creating order:", errorData.message);
+      }
+      return;
+    }
 
     const data = await response.json();
-    if(data.status == "success"){
-      console.log(data.message)
-      console.log(data.order_id)
-      createOrderedProducts(data.order_id);     
+
+    if (data.status === "success") {
+      console.log(data.message);
+      console.log("Order ID:", data.order_id);
+      createOrderedProducts(data.order_id);
       toggleOrderModalVisibility();
       clearCart();
+    } else {
+      console.error("Failed to create order:", data.message);
     }
-  }
-  catch(error){
-    console.log(error)
+  } catch (error) {
+    console.error("Unexpected error:", error);
   }
 }
 

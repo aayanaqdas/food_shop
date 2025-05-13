@@ -1,6 +1,6 @@
 .orders-container{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     padding: 20px;
     max-width: 1440px;
     margin: 0 auto;
@@ -15,7 +15,7 @@
 #order-list{
     width: 100%;
     height: 100%;
-    margin-top: 100px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;

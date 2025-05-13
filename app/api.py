@@ -29,7 +29,7 @@ def generate_order_id():
     """Generate a short, unique order ID."""
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
-@api.route('/api/order', methods=['POST'])
+@api.route('/api/create_order', methods=['POST'])
 def create_order():
     try:
         # Ensure the user is logged in
