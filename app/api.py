@@ -81,8 +81,57 @@ def create_order():
         return jsonify({'status': 'error', 'message': 'Failed to create order', 'error': str(e)}), 500
 
 
+@api.route('/api/order_history', methods=['GET'])
+def get_user_orders():
+    try:
+        # Ensure the user is logged in
+        if 'user_id' not in session:
+            return jsonify({'status': 'error', 'message': 'User not logged in'}), 401
+
+        user_id = session['user_id']  # Get the user_id from the session
+
+        conn = current_app.get_db()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT order_id, order_total, order_date 
+            FROM Orders 
+            WHERE user_id = %s 
+            ORDER BY order_date DESC;
+        """, (user_id,))
+        orders = cursor.fetchall()
+        cursor.close()
+
+        return jsonify({'status': 'success', 'orders': orders}), 200
+
+    except Exception as e:
+        logging.error(f"Error fetching order history: {e}")
+        return jsonify({'status': 'error', 'message': 'Failed to fetch order history', 'error': str(e)}), 500
 
 
+
+@api.route('/api/order_details', methods=['GET'])
+def get_order_details():
+    try:
+        order_id = request.args.get('order_id')
+        if not order_id:
+            return jsonify({'status': 'error', 'message': 'Order ID is required'}), 400
+
+        conn = current_app.get_db()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("""
+            SELECT od.product_id, p.name, p.thumbnail_image, od.quantity, od.total_price
+            FROM OrderDetails od
+            JOIN Products p ON od.product_id = p.product_id
+            WHERE od.order_id = %s
+        """, (order_id,))
+        products = cursor.fetchall()
+        cursor.close()
+
+        return jsonify({'status': 'success', 'products': products}), 200
+    except Exception as e:
+        logging.error(f"Error fetching order details: {e}")
+        return jsonify({'status': 'error', 'message': 'Failed to fetch order details', 'error': str(e)}), 500
 
 
 

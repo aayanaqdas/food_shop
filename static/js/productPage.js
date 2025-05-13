@@ -1,5 +1,16 @@
 import { addToCart, updateQuantity } from "./cart.js";
 
+async function fetchProductData() {
+  try {
+    const response = await fetch("/api/products");
+    const data = await response.json();
+    console.log(data);
+    createProductElement(data.products);
+  } catch (error) {
+    console.error("Failed to fetch product data:", error);
+  }
+}
+
 function createProductElement(productData) {
   const productsGrid = document.getElementById("productsGrid");
 
@@ -51,4 +62,4 @@ function createProductElement(productData) {
   });
 }
 
-export { createProductElement };
+fetchProductData()

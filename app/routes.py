@@ -23,3 +23,11 @@ def signup_page():
         flash('You are already logged in.', 'error')
         return redirect(url_for('routes.index'))
     return render_template("signup.html")
+
+
+@routes.route("/orders")
+def orders_page():
+    user_logged_in = 'user_id' in session
+    if user_logged_in:
+        return render_template("orders.html", user_logged_in=user_logged_in)
+    return redirect(url_for('routes.login_page'))

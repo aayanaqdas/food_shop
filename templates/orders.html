@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../static/assets/images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <link rel="stylesheet" href="../static/css/ordersPage.css">
+
+    <title>Food shop</title>
+  </head>
+  <body>
+    <nav>
+        <div class="nav-content">
+          <h1><a href="/">Food shop</a></h1>
+          <ul>
+            {% if user_logged_in %}
+            <li><a href="/orders">Orders</a></li>
+            <li><a href="/cart">Cart</a></li>
+            <li><a href="/logout">Logout</a></li>
+
+            {% else %}
+            <li><a href="/login">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+    </nav>
+    <div class="orders-container">
+        <h1>Your Orders</h1>
+        <div id="order-list">
+          <p class="orders-default-text">No orders found. Place your first order <a href="/">here!</a></p>
+        </div>
+    </div>
+    <script type="module" src="../static/js/orderHistory.js"></script>
+    <script type="module" src="../static/js/main.js"></script>
+  </body>
+</html>
