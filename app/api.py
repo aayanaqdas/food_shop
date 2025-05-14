@@ -120,7 +120,7 @@ def get_order_details():
         conn = current_app.get_db()
         cursor = conn.cursor(dictionary=True)
         cursor.execute("""
-            SELECT od.product_id, p.name, p.thumbnail_image, od.quantity, od.total_price
+            SELECT od.product_id, p.name, p.tablet_image, od.quantity, od.total_price
             FROM OrderDetails od
             JOIN Products p ON od.product_id = p.product_id
             WHERE od.order_id = %s

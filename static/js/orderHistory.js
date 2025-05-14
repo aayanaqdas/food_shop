@@ -10,19 +10,23 @@ async function fetchOrders() {
         orderList.innerHTML = '';
 
         orders.forEach(order => {
+            const {order_id, order_total, order_date} = order;
           const orderDiv = document.createElement('div');
           orderDiv.classList.add('order');
           orderDiv.innerHTML = `
-            <div class="order-summary">
-              <p>Order ID: ${order.order_id}</p>
-              <p>Total: $${order.order_total}</p>
-              <p>Date: ${order.order_date}</p>
+            <div class="order-summary-wrapper">
+              <div class="order-summary">
+                <p class="order-date">${new Date(order_date).toLocaleDateString('en-GB')}</p>
+                <p class="order-id">Order ID: <span>#${order_id}</span></p>
+                <p class="order-total">Total: <span>$${order_total}</span></p>
+              </div>
               <button class="order-details-btn">View Details</button>
             </div>
             <div class="order-details" style="display: none;"></div>
+          </div>
           `;
           const detailsBtn = orderDiv.querySelector(".order-details-btn")
-          detailsBtn.addEventListener("click", () => fetchOrderDetails(order.order_id, detailsBtn))
+          detailsBtn.addEventListener("click", () => fetchOrderDetails(order_id, detailsBtn))
           orderList.appendChild(orderDiv);
         });
       } else {
@@ -46,13 +50,15 @@ async function fetchOrders() {
           const products = data.products;
           console.log(products)
           products.forEach(product => {
+            const {product_id, name, tablet_image, quantity, total_price} = product;
             const productDiv = document.createElement('div');
             productDiv.classList.add('product');
             productDiv.innerHTML = `
-              <img src="${product.thumbnail_image}" alt="${product.name}" />
-              <p>${product.name}</p>
-              <p>Quantity: ${product.quantity}</p>
-              <p>Total Price: $${product.total_price}</p>
+              <img src="${tablet_image}" alt="${name}" />
+              <p>${name}</p>
+              <p>Quantity: ${quantity}</p>
+              <p>Total Price: $${total_price}</p>
+              
             `;
             detailsDiv.appendChild(productDiv);
           });
