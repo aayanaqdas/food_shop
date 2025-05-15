@@ -1,3 +1,13 @@
+CREATE DATABASE IF NOT EXISTS food_shop;
+
+USE food_shop;
+
+CREATE USER IF NOT EXISTS 'flaskuser'@'%' IDENTIFIED BY 'password';
+
+GRANT ALL PRIVILEGES ON movieWorld.* TO 'flaskuser'@'%';
+
+FLUSH PRIVILEGES;
+
 -- Users table for account authentication and user details
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
