@@ -58,27 +58,71 @@ body {
   color: var(--Rose-900);
 }
 
-
-.nav-content ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-}
-
-.nav-content ul li {
-  display: inline;
-}
-
-.nav-content ul li a {
+.nav-links ul a{
   text-decoration: none;
+  color: var(--Rose-900);
+  font-weight: 600;
+  margin-right: 15px;
+}
+
+.nav-links ul a:hover{
+  color: var(--Red);
+}
+ 
+
+
+.user-dropdown {
+  position: relative;
+  display: inline-block;
   cursor: pointer;
   font-weight: 600;
   color: var(--Rose-900);
+  font-size: 1rem;
 }
 
-.nav-content ul li a:hover {
+.user-dropdown:hover{
   color: var(--Red);
 }
+
+/* Hide the dropdown menu by default */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--Rose-50);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  list-style: none;
+  border-radius: 6px;
+  z-index: 1000;
+}
+
+.dropdown-menu.active {
+  display: block;
+}
+
+/* Style for dropdown menu items */
+.dropdown-menu li {
+  padding: 8px 16px;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: black;
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  color: var(--Red);
+}
+
+/* Show the dropdown menu on hover */
+.user-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+
 
 .nav-sticky {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);

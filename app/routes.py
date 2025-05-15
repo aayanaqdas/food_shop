@@ -6,7 +6,8 @@ routes = Blueprint('routes', __name__)
 def index():
     # Check if the user is logged in
     user_logged_in = 'user_id' in session
-    return render_template("index.html", user_logged_in=user_logged_in)
+    user_name = session['name'] if user_logged_in and 'name' in session else None
+    return render_template("index.html", user_logged_in=user_logged_in, user_name=user_name)
 
 @routes.route('/login')
 def login_page():
@@ -29,5 +30,6 @@ def signup_page():
 def orders_page():
     user_logged_in = 'user_id' in session
     if user_logged_in:
-        return render_template("orders.html", user_logged_in=user_logged_in)
+        user_name = session['name'] if 'name' in session else None
+        return render_template("orders.html", user_logged_in=user_logged_in, user_name=user_name)
     return redirect(url_for('routes.login_page'))

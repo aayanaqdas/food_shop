@@ -12,42 +12,35 @@
     />
     <link rel="stylesheet" href="../static/css/main.css" />
     <link rel="stylesheet" href="../static/css/ordersPage.css">
-    <link rel="stylesheet" href="../static/css/cart.css">
 
     <title>Food shop</title>
   </head>
   <body>
     <nav>
-        <div class="nav-content">
-          <h1><a href="/">Food shop</a></h1>
+      <div class="nav-content">
+        <h1><a href="/">Food shop</a></h1>
+        <div class="nav-links">
+          {% if user_logged_in %}
           <ul>
-            {% if user_logged_in %}
-            <li><a href="/">Products</a></li>
-            <li><a href="#">Cart</a></li>
-            <li><a href="/logout">Logout</a></li>
-
+            <a href="/">Products</a>
+            <li class="user-dropdown">
+              <span class="user-name" data-toggle="dropdown">{{ user_name }}</span>
+              <ul class="dropdown-menu">
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+              
+            </li>
             {% else %}
             <li><a href="/login">Login</a></li>
             {% endif %}
           </ul>
         </div>
-    </nav>
+      </div>
+  </nav>
     <div class="orders-container">
         <h1>Your Orders</h1>
         <div id="order-list">
-          <p class="orders-default-text">No orders found. Place your first order <a href="/">here!</a></p>
-          <!-- <div class="order">
-            <div class="order-summary-wrapper">
-              <div class="order-summary">
-                <p class="order-date">14.05.25</p>
-                <p class="order-id">Order ID: <span>#ABCDEFG</span></p>
-                <p class="order-total">Total: <span>$14.50</span></p>
-              </div>
-              <button class="order-details-btn">View Details</button>
-            </div>
-            <div class="order-details" style="display: none;"></div>
-          </div> -->
-        </div>
+          <p class="orders-default-text">No orders found. Place your first order <a href="/">here!</a></p></div>
     </div>
     <script type="module" src="../static/js/orderHistory.js"></script>
     <script type="module" src="../static/js/main.js"></script>

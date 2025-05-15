@@ -18,19 +18,24 @@
   </head>
   <body>
     <nav>
-        <div class="nav-content">
-          <h1><a href="/">Food shop</a></h1>
+      <div class="nav-content">
+        <h1><a href="/">Food shop</a></h1>
+        <div class="nav-links">
           <ul>
             {% if user_logged_in %}
-            <li><a href="/orders">Orders</a></li>
-            <li><a href="/cart">Cart</a></li>
-            <li><a href="/logout">Logout</a></li>
-
+            <li class="user-dropdown">
+              <span class="user-name" data-toggle="dropdown">{{ user_name }}</span>
+              <ul class="dropdown-menu">
+                <li><a href="/orders">Orders</a></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </li>
             {% else %}
-            <li><a href="/login">Login</a></li>
+            <a href="/login">Login</a>
             {% endif %}
           </ul>
         </div>
+      </div>
     </nav>
     <div class="container">
       <div class="content">
@@ -87,6 +92,6 @@
       </div>
     </div>
     <script type="module" src="../static/js/productPage.js"></script>
-    <script type="module" src="../static/js/main.js"></script>    
+    <script type="module" src="../static/js/main.js"></script>
   </body>
 </html>

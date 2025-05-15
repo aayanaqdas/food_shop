@@ -5,9 +5,11 @@ async function fetchOrders() {
 
       if (data.status === 'success') {
         const orders = data.orders;
+        
         console.log(orders)
+        const noOrdersText = document.querySelector(".orders-default-text")
+        orders.length > 0 ? noOrdersText.style.display = "none" : "block";
         const orderList = document.getElementById('order-list');
-        orderList.innerHTML = '';
 
         orders.forEach(order => {
             const {order_id, order_total, order_date} = order;
@@ -50,14 +52,23 @@ async function fetchOrders() {
           const products = data.products;
           console.log(products)
           products.forEach(product => {
-            const {product_id, name, tablet_image, quantity, total_price} = product;
+            const {product_id, name, tablet_image, price, quantity, total_price} = product;
             const productDiv = document.createElement('div');
-            productDiv.classList.add('product');
+            productDiv.classList.add('order-product');
             productDiv.innerHTML = `
-              <img src="${tablet_image}" alt="${name}" />
-              <p>${name}</p>
-              <p>Quantity: ${quantity}</p>
-              <p>Total Price: $${total_price}</p>
+              <div class="order-product-details-wrapper">
+                <div class="order-product-img_details">
+                  <img class="order-product-image" src="${tablet_image}" alt="${name}">
+                  <div class="order-product-details">
+                    <p class="order-product-name">${name}</p>
+                    <div class="order-product-quantity_price">
+                      <p class="order-product-quantity">${quantity}x</p>
+                      <p class="order-product-default-price">@ $${price}</p>
+                    </div>
+                  </div>
+                </div>
+                <p class="order-product-total-price">$${total_price}</p>
+              </div>
               
             `;
             detailsDiv.appendChild(productDiv);

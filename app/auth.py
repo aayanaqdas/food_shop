@@ -35,6 +35,8 @@ def signup():
         try:
             password_hash = generate_password_hash(password)
             conn = current_app.get_db()
+            if conn is None:
+                raise Exception("Database connection is not initialized.")
             cursor = conn.cursor(dictionary=True)
             cursor.execute("INSERT INTO Users (email, password_hash, full_name) VALUES (%s, %s, %s)", (email, password_hash, full_name))
             conn.commit()
@@ -70,6 +72,7 @@ def login():
             if user and check_password_hash(user['password_hash'], password):
                 session['user_id'] = user['user_id']
                 session['email'] = user['email']
+                session['name'] = user['full_name']
                 flash('Login successful!', 'success')
                 return redirect(url_for('routes.index'))
             else:
