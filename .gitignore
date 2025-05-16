@@ -4,5 +4,7 @@ preview.jpg
 *.env
 *.pyc
 **__pycache__/
+*.pdf
+*.docx
 
 
