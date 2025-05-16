@@ -4,7 +4,7 @@ USE food_shop;
 
 CREATE USER IF NOT EXISTS 'flaskuser'@'%' IDENTIFIED BY 'password';
 
-GRANT ALL PRIVILEGES ON movieWorld.* TO 'flaskuser'@'%';
+GRANT ALL PRIVILEGES ON food_shop.* TO 'flaskuser'@'%';
 
 FLUSH PRIVILEGES;
 
@@ -49,13 +49,3 @@ CREATE TABLE OrderDetails (
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
 
--- Cart table for storing user's cart items
--- Not using
-CREATE TABLE Cart (
-    cart_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    product_id INT NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id),
-    FOREIGN KEY (product_id) REFERENCES Products(product_id)
-);
