@@ -1,4 +1,5 @@
 from flask import Blueprint, current_app, jsonify, request, session
+import json
 import logging
 import random
 import string
@@ -137,22 +138,13 @@ def get_order_details():
 
 
 
-
-
-
-
-
-
-
-
-
 # def read_file():
 #     DATA_FILE = "data.json"
 #     with open(DATA_FILE, "r", encoding="utf-8") as file:
 #         return json.load(file)
 
-# @api.route('/api/add_products', methods=['GET'])
-# def get_products():
+# @api.route('/api/add_products_db', methods=['GET'])
+# def add_products_to_db():
 #     try:
 #         data = read_file()
 #         conn = current_app.get_db()
@@ -168,7 +160,7 @@ def get_order_details():
 #             desktop_image = product['image']['desktop']
 #             tablet_image = product['image']['tablet']
 
-#             cursor.execute("INSERT INTO products (name, category, price, thumbnail_image, mobile_image, desktop_image, tablet_image) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name, category, price, thumbnail_image, mobile_image, desktop_image, tablet_image))
+#             cursor.execute("INSERT INTO Products (name, category, price, thumbnail_image, mobile_image, desktop_image, tablet_image) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name, category, price, thumbnail_image, mobile_image, desktop_image, tablet_image))
 #         conn.commit()
 #         cursor.close()
 

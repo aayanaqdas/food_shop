@@ -21,3 +21,22 @@ document.addEventListener("click", (event) => {
     }
   }
 });
+
+
+
+
+
+// async function addProductsToDb(){
+//   try{
+//     const response = await fetch("/api/add_products_db")
+//     const data = await response.json()
+
+//     console.log(data)
+
+//   }
+//   catch(error){
+//     console.log(error)
+//   }
+// }
+
+// addProductsToDb()
