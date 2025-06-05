@@ -23,6 +23,10 @@ def signup():
         full_name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
+        address = request.form.get("address")
+        city = request.form.get("city")
+        post_code = request.form.get("post-code")
+
 
         if not full_name or not email or not password:
             flash('All fields are required.', 'error')
@@ -38,7 +42,7 @@ def signup():
             if conn is None:
                 raise Exception("Database connection is not initialized.")
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("INSERT INTO Users (email, password_hash, full_name) VALUES (%s, %s, %s)", (email, password_hash, full_name))
+            cursor.execute("INSERT INTO Users (email, password_hash, full_name, address, city, post_code) VALUES (%s, %s, %s, %s, %s, %s)", (email, password_hash, full_name, address, city, post_code))
             conn.commit()
             cursor.close()
 
